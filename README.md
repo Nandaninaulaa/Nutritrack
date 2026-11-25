@@ -9,7 +9,7 @@ Nutritrack is a nutrition tracking app with a browser-based interface, a Node.js
 - MongoDB running locally at `mongodb://127.0.0.1:27017/nutritrack`
 - A private JWT signing secret for the backend
 
-The backend currently connects to that MongoDB URL directly in `backend/server.js`.
+The backend uses the local MongoDB URL by default. Set `MONGODB_URI` to use a different database, such as a hosted MongoDB instance.
 
 ## Run locally
 
@@ -32,6 +32,12 @@ On Windows PowerShell:
 npm install
 $env:JWT_SECRET = "your-long-random-secret"
 node backend/server.js
+```
+
+To connect to a MongoDB instance other than the local default, set `MONGODB_URI` in the same terminal before starting the API. For example, on PowerShell:
+
+```powershell
+$env:MONGODB_URI = "mongodb+srv://<user>:<password>@<cluster>/nutritrack"
 ```
 
 The API listens on `http://localhost:5000`. The server exits during startup if `JWT_SECRET` is missing.
