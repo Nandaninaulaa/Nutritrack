@@ -7,7 +7,11 @@ const SECRET = require("../config/jwtSecret");
 
 // REGISTER
 router.post("/register", async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password } = req.body || {};
+
+    if (![name, email, password].every((value) => typeof value === "string" && value.trim())) {
+        return res.status(400).json({ message: "Name, email, and password are required" });
+    }
 
     const hashed = await bcrypt.hash(password, 10);
     const user = new User({ name, email, password: hashed });
@@ -18,7 +22,11 @@ router.post("/register", async (req, res) => {
 
 // LOGIN
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
+
+    if (![email, password].every((value) => typeof value === "string" && value.trim())) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
