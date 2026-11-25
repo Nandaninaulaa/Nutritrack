@@ -7,8 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ DB connection
-mongoose.connect("mongodb://127.0.0.1:27017/nutritrack");
+// Use the local database by default, or a deployment-specific URI when provided.
+const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/nutritrack";
+mongoose.connect(mongoUri);
 
 // ✅ IMPORT ROUTES
 const foodRoutes = require("./routes/foodRoutes");
