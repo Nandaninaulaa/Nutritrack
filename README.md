@@ -64,3 +64,28 @@ python -m http.server 8080
 ```
 
 Open [http://localhost:8080](http://localhost:8080) in your browser. The page calls the API at port 5000 and the prediction service at port 8000, so keep all three processes running while using the app.
+
+## API reference
+
+### Express API
+
+The Express API runs at `http://localhost:5000`.
+
+| Method | Endpoint | Purpose | Authentication |
+| --- | --- | --- | --- |
+| `POST` | `/api/auth/register` | Register with `name`, `email`, and `password` | None |
+| `POST` | `/api/auth/login` | Log in with `email` and `password`; returns a JWT `token` | None |
+| `GET` | `/api/food` | List saved food entries | None |
+| `POST` | `/api/food` | Save a food entry | JWT in the `Authorization` header |
+
+A food entry accepts fields such as `name`, `quantity`, `calories`, `protein`, `carbs`, `fat`, `mealType`, and `date`. For the protected food creation route, send the returned token as the `Authorization` header value.
+
+Example calorie prediction request:
+
+```sh
+curl -X POST http://127.0.0.1:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"protein": 20, "carbs": 30, "fat": 10}'
+```
+
+The prediction response includes a `calories` value calculated from the submitted macronutrients.
