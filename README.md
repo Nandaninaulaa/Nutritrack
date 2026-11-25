@@ -40,7 +40,7 @@ To connect to a MongoDB instance other than the local default, set `MONGODB_URI`
 $env:MONGODB_URI = "mongodb+srv://<user>:<password>@<cluster>/nutritrack"
 ```
 
-The API listens on `http://localhost:5000`. The server exits during startup if `JWT_SECRET` is missing.
+The API listens on `http://localhost:5000` after connecting to MongoDB. It exits during startup if `JWT_SECRET` is missing or the database connection fails.
 
 ### 2. Start the calorie prediction service
 
