@@ -7,6 +7,7 @@ Nutritrack is a nutrition tracking app with a browser-based interface, a Node.js
 - Node.js and npm
 - Python 3
 - MongoDB running locally at `mongodb://127.0.0.1:27017/nutritrack`
+- A private JWT signing secret for the backend
 
 The backend currently connects to that MongoDB URL directly in `backend/server.js`.
 
@@ -16,14 +17,24 @@ Open three terminals from the repository root.
 
 ### 1. Start the API
 
-Install the Node dependencies and start the Express server:
+Install the Node dependencies, set a JWT secret, and start the Express server. Keep the secret private and use a different value in each environment.
+
+On macOS or Linux:
 
 ```sh
 npm install
+JWT_SECRET="your-long-random-secret" node backend/server.js
+```
+
+On Windows PowerShell:
+
+```powershell
+npm install
+$env:JWT_SECRET = "your-long-random-secret"
 node backend/server.js
 ```
 
-The API listens on `http://localhost:5000`.
+The API listens on `http://localhost:5000`. The server exits during startup if `JWT_SECRET` is missing.
 
 ### 2. Start the calorie prediction service
 
